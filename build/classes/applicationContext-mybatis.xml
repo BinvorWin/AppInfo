@@ -34,12 +34,30 @@
 			<property name= "validationQuery" value="select 1"/>
 			<property name= "numTestsPerEvictionRun" value="${maxActive}"/>
 	 </bean>
-	   
+	  
+	<!-- 事务管理   -->
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">  
+    	<property name="dataSource" ref="dataSource"/>  
+ 	</bean>
+ 	   
  	<!-- 配置mybatis SqlSessionFactoryBean -->
  	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
  		<property name="dataSource" ref="dataSource"/>
  		<property name="configLocation" value="classpath:mybatis-config.xml"/>
  	</bean>
+ 	
+ 	 	<aop:aspectj-autoproxy/>
+      <aop:config proxy-target-class="true">
+      	<aop:pointcut expression="execution(* *cn.appsys.service..*(..))" id="transService"/>
+      	<aop:advisor advice-ref="myAdvice" pointcut-ref="transService"/>
+      </aop:config>
+      
+ 	<tx:advice id="myAdvice" transaction-manager="txManager">  
+    	<tx:attributes>  
+	        <tx:method name="appsys*"  propagation="REQUIRED" rollback-for="Exception"  />
+	        <tx:method name="*" />
+    	</tx:attributes>  
+ 	</tx:advice>
  	
  	    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
     	<property name="basePackage" value="com.hbh.dao"/>
