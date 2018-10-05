@@ -1,12 +1,9 @@
   </div>
  </div>
-<!-- /page content -->
-<!-- footer content -->
 <footer>
-	<div class="pull-right">©2016 All Rights Reserved.</div>
-	<div class="clearfix"></div>
+	<div class="text-center">
+		<p style="color: #778087;"><a href="https://github.com/BinvorWin" target="_blank">github address</a></p>
 </footer>
-<!-- /footer content -->
 </div>
 </div>
 <%@include file="js.jsp"%>
